@@ -32,10 +32,12 @@ public class MovieController {
         var id = context.pathParam("movieId");
         try {
             var movie = movieRepository.findById(Integer.parseInt(id));
+
             if (movie == null) {
                 context.render("/error.html" );
                 return;
             }
+
             var reviews = reviewRepository.findByMovieId(Integer.parseInt(id));
             context.render("/movie.html", Map.of("movie", movie, "reviews", reviews));
         } catch (SQLException e) {

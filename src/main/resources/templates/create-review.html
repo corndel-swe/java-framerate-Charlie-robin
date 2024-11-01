@@ -8,7 +8,7 @@
 
   <body>
 
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <main class="review-movie" th:style="'background-image: url(' + ${movie.getImageURL()} + ')'">
       <section class="review-movie__content">
@@ -29,6 +29,7 @@
             name="content"
             th:value="${review.getContent()}"
           ></textarea>
+          <p th:if="${contentError}">An empty review is not accepted</p>
           <label class="review-movie__label" for="rating">Rating 1 - 10</label>
           <input
             class="review-movie__rating"

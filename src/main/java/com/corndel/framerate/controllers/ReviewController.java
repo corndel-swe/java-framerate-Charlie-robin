@@ -36,15 +36,24 @@ public class ReviewController {
         var id = context.pathParam("movieId");
         try {
             Movie movie = movieRepository.findById(Integer.parseInt(id));
+
+
             if (movie == null) {
-                context.render("/error.html" );
+                context.render("/error.html");
                 return;
             }
+
             var rating = context.formParamAsClass("rating", Integer.class).get();
             var content = context.formParam("content");
-            System.out.println(rating);
-            System.out.println(content);
-            reviewRepository.create(Integer.parseInt(id),content, rating);
+
+            if (content == null || content.isBlank()) {
+                Review review = new Review();
+                review.setRating(rating);
+                context.render("create-review.html", Map.of("movie", movie, "review", review, "contentError", true));
+                return;
+            }
+
+            reviewRepository.create(Integer.parseInt(id), content, rating);
             context.redirect("/" + id);
 
         } catch (SQLException e) {

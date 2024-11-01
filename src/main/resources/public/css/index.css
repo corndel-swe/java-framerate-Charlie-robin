@@ -106,6 +106,7 @@ body {
   overflow: hidden;
   opacity: 0.4;
   transition: opacity 0.3s;
+  display:block;
 }
 
 .view-movie {
